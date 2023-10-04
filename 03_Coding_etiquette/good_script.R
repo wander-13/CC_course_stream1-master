@@ -30,10 +30,10 @@ theme.LPI <- function(){
 }
 
 # Set the working directory ----
-setwd("~/Downloads/CC-4-Datavis-master")
+# already set properly
 
 # Import data from .csv ----
-LPI <- read.csv("LPIdata_CC.csv")
+LPI <- read.csv("03_Coding_etiquette/LPIdata_CC.csv")
 
 # Clean data ----
 
@@ -86,7 +86,7 @@ biome_dotplot
 
 # Bar graph looks better, save to pdf
 type = "bar"
-pdf(file="img/biome_freq_barplot.pdf",  width = 13.33, height = 26.66)
+pdf(file="biome_freq_barplot.pdf",  width = 13.33, height = 26.66)
 ggplot(LPI_long, aes(biome, color = biome)) + {
 	if(type == "bar") geom_bar() else geom_point(stat = "count")
 	} +
