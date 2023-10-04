@@ -9,7 +9,7 @@ library(dplyr)
 # Importing Edinburgh Biodiversity Data, publicly available from the NBN Gateway https://data.nbn.org.uk/
 # You can write out the file location, e.g. C:/My Documents 
 # Or you can click the "Import Dataset" button and navigate to where you've saved your file.
-edidiv <- read.csv("C:/Users/user/Desktop/Coding Club Endeavours/edidiv.csv")
+edidiv <- read.csv("edidiv.csv")
 
 # It's good practice to always check your imported data before starting analysis
 head(edidiv)
