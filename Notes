@@ -3,8 +3,15 @@ Coding Club Ecological Data Science course
 General Notes:
 - Steps for cohesive learning and implementation of learned topics
 
-1. Go to section page on coding club website
+1. Open CC Course Stream 1 master R project
+- open README.md file
+- find section tutorial link
 - read and follow along with examples
 
 2. Open R project for that section
-- try assignments on your own using materials in CC github repo
+- try assignments on your own using materials in CC Course Stream 1 repo
+
+3. Commit to github
+- make small commits
+- describe actions taken
+- update notes file with important information
