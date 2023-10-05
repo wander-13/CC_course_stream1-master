@@ -169,3 +169,19 @@ summary3 <- summarise(elong_grouped, total.growth = sum(length),
                       sd.growth = sd(length))
 
 # 6. ..._join() DATASETS BASED ON SHARED ATTRIBUTES
+
+# Load the treatments associated with each individual
+
+treatments <- read.csv("04_Data_manip_1/EmpetrumTreatments.csv", header = TRUE, sep = ";")
+head(treatments)
+
+# Join the two data frames by ID code. The column names are spelled differently, so we need to tell the function which columns represent a match. We have two columns that contain the same information in both datasets: zone and individual ID.
+
+experiment <- left_join(elongation_long, treatments, by = c("indiv" = "Indiv", "zone" = "Zone"))
+
+# We see that the new object has the same length as our first data frame, which is what we want. And the treatments corresponding to each plant have been added!
+
+experiment2 <- merge(elongation_long, treatments, by.x = c("zone", "indiv"), by.y = c("Zone", "Indiv"))  
+# same result!
+
+boxplot(length ~ Treatment, data = experiment)
