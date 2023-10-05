@@ -16,6 +16,7 @@ General Notes:
 - describe actions taken
 - update notes file with important information
 
+################################################################################
  Good Script Structure:
  
  Introduction contains
@@ -24,17 +25,26 @@ General Notes:
   - Contact details
   - Date
   
-Library contains
+ Library contains
   - Packages used
-- keep tpgether at top of script to reduce searching time and confusion
+   - keep together at top of script to reduce searching time and confusion
 
-Functions contains
+ Functions contains
   - any function used in the script
   
-Set Working Directory contains
+ Set Working Directory contains
   - use setwd() to set working directory
   
-Import Data contains
+ Import Data contains
   - code for importing data 
   - example:
-data <- read.csv("data.csv")
+      data <- read.csv("data.csv")
+
+ Sections of your analysis
+  - examples:
+    - Formatting Data
+    - Calculations
+    - Visualizations
+    - Outputs
+      - image and data files
+################################################################################
