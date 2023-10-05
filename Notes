@@ -156,3 +156,22 @@ colnames(dataframe)[colnames(dataframe) == 'Old_Complicated_Name'] <- 'new.simpl
   R-studio Addins
     - add point and click functionality menus
       - in Profile/Tools/Addins
+################################################################################
+Operators for logical operations
+Here are some of the most commonly used operators to manipulate data. When you use them to create a subsetting condition, R will evaluate the expression, and return only the observations for which the condition is met.
+
+==: equals exactly
+
+<, <=: is smaller than, is smaller than or equal to
+
+>, >=: is bigger than, is bigger than or equal to
+
+!=: not equal to
+
+%in%: belongs to one of the following (usually followed by a vector of possible values)
+
+&: AND operator, allows you to chain two conditions which must both be met
+
+|: OR operator, to chains two conditions when at least one should be met
+
+!: NOT operator, to specify things that should be omitted
