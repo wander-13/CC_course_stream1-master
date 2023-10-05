@@ -15,3 +15,11 @@ General Notes:
 - make small commits
 - describe actions taken
 - update notes file with important information
+
+ Good Script Structure:
+ Introduction: 
+  - Script Purpose (what dows it do)
+  - Authors names
+  - Contact details
+  - Date
+
