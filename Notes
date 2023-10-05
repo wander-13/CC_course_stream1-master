@@ -28,3 +28,13 @@ Library contains
   - Packages used
 - keep tpgether at top of script to reduce searching time and confusion
 
+Functions contains
+  - any function used in the script
+  
+Set Working Directory contains
+  - use setwd() to set working directory
+  
+Import Data contains
+  - code for importing data 
+  - example:
+data <- read.csv("data.csv")
