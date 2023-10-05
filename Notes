@@ -48,3 +48,111 @@ General Notes:
     - Outputs
       - image and data files
 ################################################################################
+ Naming files and objects
+  - File names are meaningful, avoiding spaces and strange characters
+    - separate words with underscores e.g. LPI_analysis_2023.R
+  - object names are meaningful and concise
+  - object, variable and function names should be all lowercase
+    - object and variable names should have words separated by underscores
+        e.g. object_name$variable_name
+    - variable names should be nouns 
+        e.g. abundance, richness
+    - function names should be verbs with words separated by dots
+        e.g. calc.sp.richness
+ - BE CONSISTENT
+################################################################################
+ Spacing
+  - place spaces around all infix operators (=, +, -, <-, etc.)
+    - also when using = in a function call
+    - : and :: are the only exceptions
+  - don't place a space before left parentheses in a function call
+    - # Good
+      if (debug) do(x)
+      plot(x. y)
+    - # Bad
+      if(debug)do(x)
+      plot (x. y)
+  - extra spaces in a row are ok if improving alignment of equal signs or assignments (<-)
+  - No spaces around code in parentheses or square brackets (unless a comma is present)
+  - Inline commenting
+    - place 2 spaces after code, then #, then space, then comment text
+################################################################################
+  Curly Braces
+    - Opening curly brace
+      - never goes on its on line
+      - followed by new line
+    - Closing curly brace
+      - always goes on its own line, unless followed by else
+    - Always indent code inside curly braces
+    Examples:
+# Good
+if (y < 0 && debug) {
+  message("Y is negative")
+}
+
+if (y == 0) {
+  log(x)
+} else {
+  y ^ x
+}
+
+# Bad
+if (y < 0 && debug)
+{message("Y is negative")}
+if (y == 0) {
+  log(x)
+}
+
+else {
+  y ^ x
+}
+    - very short statements are ok on one line
+    Example:
+if (y < 0 && debug) message("Y is negative")
+################################################################################
+  Line Length
+    - 80 characters per line
+    - Using pipes fro dplyr package, keep %>% at end of line
+        and continue on new line
+    - Using ggplot2, keep + at end of line and continue on new line
+################################################################################
+  Indentation
+    - If a command runs over multiple lines, indent the second line to where the
+      definition starts
+################################################################################
+  Tidying up old scripts and data frames
+    - Using R studio: go to Code/Reformat code
+
+  # Reformat your old code to add in spaces and limit line length
+  install.packages("formatR")
+  library("formatR")
+  
+  # Set working directory to wherever your messy script is
+  tidy_source("messy_script_2017-02-25.R", file = "tidy_script_2017-02-25.R", width.cutoff = 100)
+  # If you don't specify file = "new_script.R", your script will get overwritten, dangerous!
+  # If you don't specify a width cutoff point, tidy_source just adds in the spaces
+  # 100 characters seems like a reasonable cutoff point
+  
+  # Reformat all the scripts in a directory
+  # Set your working directory to wherever your messy scripts are
+  
+  # IMPORTANT this will override script files, so make a duplicate back up folder, in case tidy_dir messes up
+  tidy_dir(path="whatever/your/path/is", recursive = TRUE)
+  # recursive	- whether to look for R scripts in subdirectories of the directory specified under path
+  
+  Renaming old objects and variables
+    - For objects use Find and Replace
+    - For variables
+names(dataframe) <- gsub(".", "_", names(dataframe), fixed = TRUE)
+# This code takes all of the variable names in the imaginary dataset `dataframe` and replaces `.` with `_`
+# Depending on the naming style you are using, you might want to go the other way around and use `.` in all variable names
+
+names(dataframe) <- tolower(names(dataframe))
+# This code makes all of the variable names in the imaginary dataset lowercase
+
+colnames(dataframe)[colnames(dataframe) == 'Old_Complicated_Name'] <- 'new.simple.name'
+# Renaming an individual column in the imaginary dataset
+################################################################################
+  R-studio Addins
+    - add point and click functionality menus
+      - in Profile/Tools/Addins
