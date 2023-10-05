@@ -17,9 +17,14 @@ General Notes:
 - update notes file with important information
 
  Good Script Structure:
- Introduction: 
+ 
+ Introduction contains
   - Script Purpose (what dows it do)
   - Authors names
   - Contact details
   - Date
+  
+Library contains
+  - Packages used
+- keep tpgether at top of script to reduce searching time and confusion
 
