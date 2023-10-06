@@ -40,3 +40,38 @@ library(ggplot2)
 
 apples.m <- lm(yield ~ spacing2, data = apples)
 summary(apples.m)
+anova(apples.m)
+
+# Checking that the residuals are normally distributed
+apples.resid <- resid(apples.m)              # Extracting the residuals
+shapiro.test(apples.resid)                   # Using the Shapiro-Wilk test
+# The null hypothesis of normal distribution is accepted: there is no significant difference (p > 0.05) from a normal distribution
+
+# Checking for homoscedasticity
+bartlett.test(apples$yield, apples$spacing2)
+bartlett.test(yield ~ spacing2, data = apples)  # Note that these two ways of writing the code give the same results
+# The null hypothesis of homoscedasticity is accepted
+
+plot(apples.m)  # you will have to press Enter in the command line to view the plots
+
+################################################################################
+
+sheep <- agridat::ilri.sheep   # load the data
+
+library(dplyr)
+sheep <- filter(sheep, ewegen == "R")   # there are confounding variables in this dataset that we don't want to take into account. We'll only consider lambs that come from mothers belonging to the breed "R".
+
+head(sheep)  # overview of the data; we'll focus on weanwt (wean weight) and weanage
+
+sheep.m1 <- lm(weanwt ~ weanage, data = sheep)   # run the model
+summary(sheep.m1)                                # study the output
+sheep.m2 <- lm(weanwt ~ weanage*sex, data = sheep)
+summary(sheep.m2)
+
+(sheep.p <- ggplot(sheep, aes(x = weanage, y = weanwt)) +
+    geom_point(aes(colour = sex)) +                                # scatter plot, coloured by sex
+    labs(x = "Age at weaning (days)", y = "Wean weight (kg)") +
+    stat_smooth(method = "lm", aes(fill = sex, colour = sex)) +    # adding regression lines for each sex
+    scale_colour_manual(values = c("#FFC125", "#36648B")) +
+    scale_fill_manual(values = c("#FFC125", "#36648B")) +
+    theme.clean() )
