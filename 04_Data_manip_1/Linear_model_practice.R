@@ -37,3 +37,6 @@ library(ggplot2)
     theme.clean() +  
     theme(axis.text.x = element_text(size = 12, angle = 0)) +
     labs(x = "Spacing (m)", y = "Yield (kg)"))
+
+apples.m <- lm(yield ~ spacing2, data = apples)
+summary(apples.m)
