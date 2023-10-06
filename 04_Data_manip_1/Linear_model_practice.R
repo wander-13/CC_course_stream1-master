@@ -110,3 +110,29 @@ Weevil_damage$block <- as.factor(Weevil_damage$block)
 # Running the model
 weevil.m <- glm(damage_T_F ~ block, family = binomial, data = Weevil_damage)
 summary(weevil.m)
+
+################################################################################
+# CHALLENGE YOURSELF
+ToothGrowth <- datasets::ToothGrowth
+str(ToothGrowth)
+
+# 1st factorize dose b/c not continuous (.5, 1, 2), 3 levels
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+# we use ANOVA for quantifying the effect of a discrete/categorical explanatory 
+# variable(s) on a continuous response variable
+tooth.m <- lm(len ~ dose*supp, data = ToothGrowth)
+summary(tooth.m)
+
+# 1. Are higher doses of vitamin C beneficial for tooth growth? YES
+# 2. Does the method of administration (orange juice, OJ, or ascorbic acid, VC) 
+#    influence the effect of the dose on tooth growth?  Yes
+# 3. What would be the predicted tooth length of a guinea pig given 1 mg of vitamin C as ascorbic acid?
+# 13.23 length for OJ, dose 0.5
+# + 9.47 for OJ, dose 1.0
+# - 5.25 for VC, dose 0.5
+# - .68 for VC, dose 1.0
+(13.23 + 9.47 - 5.25) - .68 = 16.77 # length
+
+ggplot(ToothGrowth, aes(x = dose, y = len))+
+  geom_boxplot(aes(colour = supp)) +
+  theme.clean()
