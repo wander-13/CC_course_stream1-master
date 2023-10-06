@@ -223,3 +223,120 @@ ggsave(panel, file = "vulture_panel2.png", width = 5, height = 12)
 ################################################################################
 
 # CHALLENGE YOURSELF
+
+# 1 - Choose TWO species from the LPI data and display their population trends over time, 
+# using a scatterplot and a linear model fit?
+
+# filter for 2 species
+narwhal_seiwhale <- filter(LPI2, Common.Name %in% c("Narwhal", "Sei whale"))
+
+# create beautified scatterplot, choose colors 
+(narwhal_seiwhale_scatter <- ggplot(narwhal_seiwhale, aes(x = year, y = abundance)) +
+    geom_point(aes(colour = Country.list), size = 1.5, alpha = 0.6) +                # alpha controls transparency
+    facet_wrap(~ Common.Name, scales = 'free_y') +                                   # facetting by species
+    stat_smooth(method = 'lm', aes(fill = Country.list, colour = Country.list)) +    # colour coding by country
+    scale_colour_manual(values = c('#8B3A3A', '#4A708B', '#FFA500', '#8B8989'), name = 'Country') +
+    scale_fill_manual(values = c('#8B3A3A', '#4A708B', '#FFA500', '#8B8989'), name = 'Country') +
+    labs(x = 'Year', y = 'Abundance \n') +
+    theme_bw() +
+    theme(panel.grid = element_blank(),
+          strip.background = element_blank(),
+          strip.text = element_text(size = 12),
+          axis.text = element_text(size = 12),
+          axis.title = element_text(size = 12),
+          legend.text = element_text(size = 12),
+          legend.title = element_text(size = 12))
+)
+# 2 - Using the same two species, filter the data to include only records from 
+# FIVE countries of your choice, and make a boxplot to compare how the abundance 
+# of those two species varies between the five countries?
+
+# check countreis found in
+unique(narwhal_seiwhale$Country.list) #only 3 countries
+
+# filter for desired species and countries, group data by country
+narwhal_seiwhale2 <- LPI2 %>% filter(Common.Name %in% c("Narwhal", "Sei whale")) %>%
+  filter (Country.list %in% c("United States", "Canada", "Iceland", "Netherlands", "Italy")) %>%
+  group_by(Country.list)
+
+# create beautified boxplot
+(narwhal_seiwhale2_boxplot <- ggplot(narwhal_seiwhale2, aes(x = Country.list, y = abundance)) +
+    geom_boxplot() +
+    labs(x = 'Country', y = 'Abundance \n') +
+    theme_bw() +
+    facet_wrap(~Common.Name, scales = 'free_y') + 
+    theme(panel.grid = element_blank(),
+          strip.background = element_blank(),
+          strip.text = element_text(size = 12),
+          axis.text = element_text(size = 12),
+          axis.title = element_text(size = 12),
+          legend.text = element_text(size = 12),
+          legend.title = element_text(size = 12))
+)
+
+library(egg)
+
+ggarrange(narwhal_seiwhale_scatter + labs(title = 'Population change over time'), 
+          narwhal_seiwhale2_boxplot + labs(title = 'Population size across countries'))
+
+################################################################################
+
+# I chose two Arctic animals
+arctic <- filter(LPI2, Common.Name %in% c('Reindeer / Caribou', 'Beluga whale'))
+
+# GRAPH 1 - POPULATION CHANGE OVER TIME
+
+(arctic.scatter<- ggplot(arctic, aes(x = year, y = abundance)) +
+    geom_point(aes(colour = Country.list), size = 1.5, alpha = 0.6) +                # alpha controls transparency
+    facet_wrap(~ Common.Name, scales = 'free_y') +                                   # facetting by species
+    stat_smooth(method = 'lm', aes(fill = Country.list, colour = Country.list)) +    # colour coding by country
+    scale_colour_manual(values = c('#8B3A3A', '#4A708B', '#FFA500', '#8B8989'), name = 'Country') +
+    scale_fill_manual(values = c('#8B3A3A', '#4A708B', '#FFA500', '#8B8989'), name = 'Country') +
+    labs(x = 'Year', y = 'Abundance \n') +
+    theme_bw() +
+    theme(panel.grid = element_blank(),
+          strip.background = element_blank(),
+          strip.text = element_text(size = 12),
+          axis.text = element_text(size = 12),
+          axis.title = element_text(size = 12),
+          legend.text = element_text(size = 12),
+          legend.title = element_text(size = 12))
+)
+
+# GRAPH 2 - BOXPLOTS OF ABUNDANCE ACROSS FIVE COUNTRIES
+
+# Only have four countries so no subsetting; let's plot directly:
+(arctic.box <- ggplot(arctic, aes(x = Country.list, y = abundance)) +
+    geom_boxplot() +
+    labs(x = 'Country', y = 'Abundance \n') +
+    theme_bw() +
+    facet_wrap(~Common.Name, scales = 'free_y') +
+    theme(panel.grid = element_blank(),
+          strip.background = element_blank(),
+          strip.text = element_text(size = 12),
+          axis.text = element_text(size = 12),
+          axis.title = element_text(size = 12),
+          legend.text = element_text(size = 12),
+          legend.title = element_text(size = 12))
+)
+
+# Not great because of high-abundance outliers for reindeer in Canada - let's remove them for now (wouldn't do that for an analysis!)
+(arctic.box <- ggplot(filter(arctic, abundance < 8000), aes(x = Country.list, y = abundance)) +
+    geom_boxplot() +
+    labs(x = 'Country', y = 'Abundance \n') +
+    theme_bw() +
+    facet_wrap(~Common.Name, scales = 'free_y') +
+    theme(panel.grid = element_blank(),
+          strip.background = element_blank(),
+          strip.text = element_text(size = 12),
+          axis.text = element_text(size = 12),
+          axis.text.x = element_text(angle = 45, hjust = 1),
+          axis.title = element_text(size = 12))
+)
+
+#Align together in a panel - here I use the egg package that lines up plots together regardless of whether they have a legend or not
+
+library(egg)
+
+ggarrange(arctic.scatter + labs(title = 'Population change over time'), 
+          arctic.box + labs(title = 'Population size across countries'))
