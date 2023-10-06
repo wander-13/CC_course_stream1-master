@@ -75,3 +75,38 @@ summary(sheep.m2)
     scale_colour_manual(values = c("#FFC125", "#36648B")) +
     scale_fill_manual(values = c("#FFC125", "#36648B")) +
     theme.clean() )
+
+################################################################################
+# A MODEL WITH A POISSON DISTRIBUTION
+
+# import shagLPI data
+shag <- read.csv("05_Linear_models/shagLPI.csv", header = TRUE)
+str(shag)
+summary(shag)
+shag$year <- as.numeric(shag$year)  # transform year from character into numeric variable
+
+# Making a histogram to assess data distribution
+(shag.hist <- ggplot(shag, aes(pop)) + geom_histogram() + theme.clean())
+
+shag.m <- glm(pop ~ year, family = poisson, data = shag)
+summary(shag.m)
+
+(shag.p <- ggplot(shag, aes(x = year, y = pop)) +
+    geom_point(colour = "#483D8B") +
+    geom_smooth(method = glm, colour = "#483D8B", fill = "#483D8B", alpha = 0.6) +
+    scale_x_continuous(breaks = c(1975, 1980, 1985, 1990, 1995, 2000, 2005)) +
+    theme.clean() +
+    labs(x = " ", y = "European Shag abundance"))
+
+################################################################################
+# A MODEL WITH A BINOMIAL DISTRIBUTION
+
+
+Weevil_damage <- read.csv("05_Linear_models/Weevil_damage.csv")
+
+# Making block a factor (a categorical variable)
+Weevil_damage$block <- as.factor(Weevil_damage$block)
+
+# Running the model
+weevil.m <- glm(damage_T_F ~ block, family = binomial, data = Weevil_damage)
+summary(weevil.m)
